@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MotoPartes - Catálogo virtual de peças para motocicletas. Mais de 7 mil itens em estoque, qualidade certificada e atendimento personalizado.">
+    <meta name="keywords" content="peças moto, motocicleta, acessórios moto, catálogo peças">
+    <link rel="icon" type="image/png" href="Design_sem_nome-removebg-preview.png">
+    <title>MotoPartes - Catálogo Virtual de Peças para Motocicletas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="enhancements.css">
+    <link rel="stylesheet" href="ux-improvements.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src="Design_sem_nome-removebg-preview.png" alt="MotoPartes" class="loading-logo">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="Design_sem_nome-removebg-preview.png" alt="MotoPartes Logo" class="logo-img">
+                </div>
+                <nav class="nav">
+                    <a href="#home">Início</a>
+                    <a href="#catalog">Catálogo</a>
+                    <a href="#about">Quem Somos</a>
+                    <a href="#contact">Contato</a>
+                </nav>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Buscar produtos..." aria-label="Buscar produtos">
+                        <button class="search-btn" title="Buscar" aria-label="Buscar"><i class="fas fa-search"></i></button>
+                    </div>
+                    <a href="#contact" class="contact-btn">
+                        <i class="fas fa-envelope"></i> Solicitar Orçamento
+                    </a>
+                </div>
+                <button class="mobile-menu-toggle" title="Abrir menu" aria-label="Abrir menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-slider">
+            <div class="hero-slide active">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h2>Há mais de 50 anos evoluindo marcas e transformando o mercado</h2>
+                    <p>Mais de 7 mil itens em estoque | Qualidade certificada | Atendimento personalizado</p>
+                    <div class="hero-buttons">
+                        <a href="#catalog" class="btn btn-primary">Ver Catálogo</a>
+                        <a href="#contact" class="btn btn-secondary">Fale Conosco</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h2>Peças de Alta Performance</h2>
+                    <p>Qualidade testada em laboratório próprio | Garantia em todos os produtos</p>
+                    <div class="hero-buttons">
+                        <a href="#catalog" class="btn btn-primary">Explorar Produtos</a>
+                        <a href="#about" class="btn btn-secondary">Conheça Nossa História</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h2>Atendimento em Todo o Brasil</h2>
+                    <p>Representantes em todos os estados | Entrega rápida | Suporte especializado</p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">Entre em Contato</a>
+                        <a href="#catalog" class="btn btn-secondary">Ver Catálogo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="hero-prev" onclick="changeSlide(-1)" aria-label="Slide anterior"><i class="fas fa-chevron-left"></i></button>
+        <button class="hero-next" onclick="changeSlide(1)" aria-label="Próximo slide"><i class="fas fa-chevron-right"></i></button>
+        <div class="hero-indicators">
+            <span class="indicator active" onclick="goToSlide(0)"></span>
+            <span class="indicator" onclick="goToSlide(1)"></span>
+            <span class="indicator" onclick="goToSlide(2)"></span>
+        </div>
+    </section>
+
+    <!-- Categories Grid -->
+    <section class="categories-grid" id="categories">
+        <div class="container">
+            <h3>Categorias de Produtos</h3>
+            <div class="category-cards">
+                <a href="#catalog" class="category-card" data-category="motor" onclick="filterByCategory('motor')">
+                    <i class="fas fa-cog"></i>
+                    <h4>Motor</h4>
+                </a>
+                <a href="#catalog" class="category-card" data-category="freios" onclick="filterByCategory('freios')">
+                    <i class="fas fa-grip-lines"></i>
+                    <h4>Freios</h4>
+                </a>
+                <a href="#catalog" class="category-card" data-category="suspensao" onclick="filterByCategory('suspensao')">
+                    <i class="fas fa-arrows-alt-v"></i>
+                    <h4>Suspensão</h4>
+                </a>
+                <a href="#catalog" class="category-card" data-category="eletrica" onclick="filterByCategory('eletrica')">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Elétrica</h4>
+                </a>
+                <a href="#catalog" class="category-card" data-category="transmissao" onclick="filterByCategory('transmissao')">
+                    <i class="fas fa-link"></i>
+                    <h4>Transmissão</h4>
+                </a>
+                <a href="#catalog" class="category-card" data-category="carroceria" onclick="filterByCategory('carroceria')">
+                    <i class="fas fa-motorcycle"></i>
+                    <h4>Carroceria</h4>
+                </a>
+                <a href="#catalog" class="category-card" data-category="acessorios" onclick="filterByCategory('acessorios')">
+                    <i class="fas fa-tools"></i>
+                    <h4>Acessórios</h4>
+                </a>
+                <a href="#catalog" class="category-card" data-category="cabos" onclick="filterByCategory('cabos')">
+                    <i class="fas fa-plug"></i>
+                    <h4>Cabos</h4>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs hidden-section" id="breadcrumbsSection">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb-list">
+                    <li><a href="#home" onclick="clearFilters()"><i class="fas fa-home"></i> Início</a></li>
+                    <li id="breadcrumbContent"></li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filters" id="catalog">
+        <div class="container">
+            <h3>Filtrar Produtos</h3>
+            <div class="filter-options">
+                <select id="categoryFilter" class="filter-select" aria-label="Filtrar por categoria">
+                    <option value="all">Todas as Categorias</option>
+                    <option value="motor">Motor</option>
+                    <option value="freios">Freios</option>
+                    <option value="suspensao">Suspensão</option>
+                    <option value="eletrica">Elétrica</option>
+                    <option value="transmissao">Transmissão</option>
+                    <option value="carroceria">Carroceria</option>
+                    <option value="acessorios">Acessórios</option>
+                    <option value="cabos">Cabos</option>
+                    <option value="carburador_injecao">Carburador / Injeção</option>
+                    <option value="chassis">Chassi</option>
+                    <option value="ferramentas">Ferramentas / Equipamentos</option>
+                    <option value="fixacao">Fixação</option>
+                    <option value="roda">Roda</option>
+                </select>
+                <select id="brandFilter" class="filter-select" aria-label="Filtrar por marca">
+                    <option value="all">Todas as Marcas</option>
+                    <option value="honda">Honda</option>
+                    <option value="yamaha">Yamaha</option>
+                    <option value="suzuki">Suzuki</option>
+                    <option value="kawasaki">Kawasaki</option>
+                    <option value="shineray">Shineray</option>
+                    <option value="dafra">Dafra</option>
+                    <option value="traxx">Traxx</option>
+                    <option value="universal">Universal</option>
+                </select>
+                <select id="sortFilter" class="filter-select" aria-label="Ordenar produtos">
+                    <option value="name">Ordenar por Nome A-Z</option>
+                    <option value="name-desc">Ordenar por Nome Z-A</option>
+                    <option value="code">Código A-Z</option>
+                    <option value="code-desc">Código Z-A</option>
+                    <option value="newest">Mais Recentes</option>
+                    <option value="stock-desc">Maior Estoque</option>
+                    <option value="stock-asc">Menor Estoque</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Catalog -->
+    <section class="catalog">
+        <div class="container">
+            <div class="catalog-header">
+                <h3>Nossos Produtos</h3>
+                <div class="results-info">
+                    <span id="resultsCount">0 produtos encontrados</span>
+                </div>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+            <div class="pagination hidden-section" id="paginationControls">
+                <button class="pagination-btn" id="prevPage" onclick="changePage(-1)">
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <div class="pagination-numbers" id="paginationNumbers"></div>
+                <button class="pagination-btn" id="nextPage" onclick="changePage(1)">
+                    Próxima <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <i class="fas fa-warehouse"></i>
+                </div>
+                <div class="about-text">
+                    <h3>Quem Somos</h3>
+                    <p>A <strong>MotoPartes</strong> é uma empresa especializada em peças para motocicletas, com mais de 50 anos de experiência no mercado. Industrializamos peças próprias e possuímos um mix com mais de 7 mil itens em estoque para pronto atendimento.</p>
+                    <p>Todos os produtos são testados e avaliados em laboratório próprio, por uma equipe especializada de técnicos e mecânicos para garantir qualidade, eficiência e segurança para o consumidor.</p>
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Mais de 7 mil itens</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Qualidade garantida</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Pronta entrega</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="brands">
+        <div class="container">
+            <h3>Marcas Parceiras</h3>
+            <p class="brands-subtitle">Trabalhamos com as melhores marcas do mercado</p>
+            
+            <!-- Logo destaque -->
+            <div class="brand-highlight">
+                <img src="Design_sem_nome-removebg-preview.png" alt="MotoPartes - Nossa Marca" class="brand-highlight-logo">
+                <p>Nossa marca de excelência</p>
+            </div>
+            
+            <div class="brands-grid" id="brandsGrid">
+                <div class="brand-item"><strong>CPL</strong></div>
+                <div class="brand-item"><strong>Cobreq</strong></div>
+                <div class="brand-item"><strong>NGK</strong></div>
+                <div class="brand-item"><strong>Bosch</strong></div>
+                <div class="brand-item"><strong>Gauss</strong></div>
+                <div class="brand-item"><strong>Vedamotors</strong></div>
+                <div class="brand-item"><strong>Riffel</strong></div>
+                <div class="brand-item"><strong>Tork</strong></div>
+                <div class="brand-item"><strong>Magneti Marelli</strong></div>
+                <div class="brand-item"><strong>Velth</strong></div>
+                <div class="brand-item"><strong>Rinaldi</strong></div>
+                <div class="brand-item"><strong>SKB</strong></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h3>Onde Estamos</h3>
+            <div class="locations">
+                <div class="location-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Manaus</h4>
+                    <p>Esquina com - Travessa Getúlio Vargas, Av. Nhamundá, 17 <br>Centro, Manaus - AM, 69020-560</p>
+                </div>
+            </div>
+            <div class="contact-info">
+                <h4>Possuímos representantes em todo o Brasil, entre em contato agora mesmo!</h4>
+                <a href="tel:1148582130" class="phone-link">
+                    <i class="fas fa-phone"></i>  (92) 99312-9970
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="Design_sem_nome-removebg-preview.png" alt="MotoPartes Logo" class="footer-logo">
+                    <p><strong>MotoPartes</strong> - Qualidade e confiança em peças para motocicletas desde 2006.</p>
+                    <p class="footer-slogan">Há mais de 19 anos evoluindo marcas e transformando o mercado</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#catalog">Catálogo</a></li>
+                        <li><a href="#about">Quem Somos</a></li>
+                        <li><a href="#contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p><i class="fas fa-phone"></i>  (92) 99312-9970</p>
+                    <p><i class="fas fa-envelope"></i> contato@manauto.com.br</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-links">
+                        <a href="#" title="Facebook" aria-label="Visite nosso Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Instagram" aria-label="Visite nosso Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="WhatsApp" aria-label="Fale conosco no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear">2025</span> <strong>Manaus Automotive</strong>. Todos os direitos reservados.</p>
+                <p class="footer-dev">Desenvolvido por Walderson</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Details Modal -->
+    <div class="modal modern-modal" id="productDetailsModal">
+        <div class="modal-content large-modal">
+            <button class="close-modal" onclick="closeProductDetailsModal()" aria-label="Fechar">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body-modern" id="detailsModalBody">
+                <!-- Conteúdo será inserido dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Solicitar Informações</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" required placeholder="Seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" required placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="tel" required placeholder="(00) 00000-0000">
+                    </div>
+                    <div class="form-group">
+                        <label for="productInterest">Produto de Interesse</label>
+                        <input type="text" id="productInterest" readonly aria-label="Produto de interesse" title="Produto selecionado">
+                    </div>
+                    <div class="form-group">
+                        <label>Mensagem</label>
+                        <textarea rows="4" placeholder="Descreva sua necessidade..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Solicitação</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/5511485821130" target="_blank" rel="noopener noreferrer" class="whatsapp-float" title="Fale conosco no WhatsApp" aria-label="Abrir WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="enhancements.js"></script>
+    <script src="ux-improvements.js"></script>
+    <script src="product-data.js"></script>
+    <script src="indexedDB-storage.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

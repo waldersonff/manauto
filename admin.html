@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Design_sem_nome-removebg-preview.png">
+    <title>Administração - Gerenciamento de Produtos</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="stylesheet" href="ux-improvements.css">
+    <link rel="stylesheet" href="modals-improvements.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="Design_sem_nome-removebg-preview.png" alt="MotoPartes Logo" class="admin-logo-img">
+                <p>Painel Administrativo</p>
+            </div>
+            <nav class="admin-nav">
+                <a href="#" class="nav-item active" data-section="products">
+                    <i class="fas fa-box"></i> Produtos
+                </a>
+                <a href="#" class="nav-item" data-section="categories">
+                    <i class="fas fa-tags"></i> Categorias
+                </a>
+                <a href="#" class="nav-item" data-section="brands">
+                    <i class="fas fa-trademark"></i> Marcas
+                </a>
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-globe"></i> Ver Site
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="admin-header">
+                <h1>Gerenciamento de Produtos</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="toggleSidebarBtn" title="Mostrar/ocultar menu">
+                        <i class="fas fa-bars"></i> Menu
+                    </button>
+                    <button class="btn btn-primary" id="addProductBtn">
+                        <i class="fas fa-plus"></i> Novo Produto
+                    </button>
+                </div>
+            </header>
+
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-box"></i>
+                    <div class="stat-info">
+                        <h3 id="totalProducts">0</h3>
+                        <p>Total de Produtos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-tags"></i>
+                    <div class="stat-info">
+                        <h3 id="totalCategories">0</h3>
+                        <p>Categorias</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-trademark"></i>
+                    <div class="stat-info">
+                        <h3 id="totalBrands">0</h3>
+                        <p>Marcas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filter-bar">
+                <input type="text" id="searchProducts" placeholder="Buscar produtos..." class="search-input">
+                <select id="filterCategory" class="filter-select" title="Filtrar produtos por categoria">
+                    <option value="all">Todas as Categorias</option>
+                </select>
+                <select id="filterBrand" class="filter-select" title="Filtrar produtos por marca">
+                    <option value="all">Todas as Marcas</option>
+                </select>
+            </div>
+
+            <!-- Products Table -->
+            <div class="table-container products-container">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Imagem</th>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Marca</th>
+                            <th>Aplicação</th>
+                            <th>Estoque</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+                <div id="paginationContainer"></div>
+            </div>
+
+            <!-- Categories Section -->
+            <div id="categories-section" class="category-section hidden-section">
+                <div class="section-header category-header">
+                    <div>
+                        <p class="eyebrow">Categorias</p>
+                        <h2>Catálogo de Categorias</h2>
+                        <p class="section-subtitle">Crie, edite e remova categorias usadas no cadastro de produtos.</p>
+                    </div>
+                    <div class="pill-group">
+                        <span class="pill">Total: <strong id="totalCatsDisplay">0</strong></span>
+                        <button class="btn btn-secondary" id="refreshCategoriesBtn"><i class="fas fa-sync-alt"></i> Atualizar</button>
+                    </div>
+                </div>
+
+                <div class="category-layout">
+                    <div class="card surface add-category-card">
+                        <div class="card-heading">
+                            <h3><i class="fas fa-plus-circle"></i> Nova Categoria</h3>
+                            <p>Use um nome simples. Categorias sem produtos podem ser removidas a qualquer momento.</p>
+                        </div>
+                        <form id="categoryForm" class="form-stack">
+                            <label for="newCategoryInput">Nome da categoria *</label>
+                            <input type="text" id="newCategoryInput" placeholder="Ex: Iluminação, Freios, Suspensão..." required>
+                            <small class="helper">Evite acentuação para não criar chaves duplicadas.</small>
+                            
+                            <label for="newSubcategoryInput" class="subcategory-label">Adicionar Subcategoria</label>
+                            <div class="subcategory-input-wrapper">
+                                <input type="text" id="newSubcategoryInput" placeholder="Digite a subcategoria..." class="subcategory-input">
+                                <button type="button" class="btn btn-secondary" id="addSubcategoryBtn">
+                                    <i class="fas fa-plus"></i> Adicionar
+                                </button>
+                            </div>
+                            
+                            <div id="subcategoryList" class="subcategory-list"></div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar categoria</button>
+                                <button type="button" class="btn btn-secondary" id="clearCategoryFormBtn"><i class="fas fa-undo"></i> Limpar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card surface list-card">
+                        <div class="card-heading row">
+                            <div>
+                                <h3><i class="fas fa-list"></i> Categorias cadastradas</h3>
+                                <p>Itens e produtos vinculados em cada categoria.</p>
+                            </div>
+                            <div class="table-legend">
+                                <span class="legend-dot"></span>
+                                <span class="legend-text">Editar ou remover</span>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <table class="management-table categories-table">
+                                <thead>
+                                    <tr>
+                                        <th>Categoria</th>
+                                        <th>Itens</th>
+                                        <th>Produtos</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="categoriesContainer">
+                                    <!-- Categorias serão carregadas aqui -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Category Modal -->
+            <div class="modal hidden-section" id="editCategoryModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-edit"></i> Editar Categoria</h3>
+                        <button class="close-modal" onclick="document.getElementById('editCategoryModal').style.display = 'none';">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editCategoryForm">
+                            <div class="form-group">
+                                <label for="editCategoryName">Nome da Categoria *</label>
+                                <input type="text" id="editCategoryName" required placeholder="Nome da categoria...">
+                            </div>
+                            <input type="hidden" id="editCategoryKey">
+                            
+                            <div class="form-group subcategory-edit-group">
+                                <label for="editSubcategoryInput">Adicionar Subcategoria</label>
+                                <div class="subcategory-input-wrapper">
+                                    <input type="text" id="editSubcategoryInput" placeholder="Digite a subcategoria..." class="subcategory-input">
+                                    <button type="button" class="btn btn-secondary" id="editAddSubcategoryBtn">
+                                        <i class="fas fa-plus"></i> Adicionar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div id="editSubcategoryList" class="subcategory-list"></div>
+                            
+                            <div class="modal-actions">
+                                <button type="submit" class="btn btn-primary modal-action-btn">
+                                    <i class="fas fa-save"></i> Salvar
+                                </button>
+                                <button type="button" class="btn btn-secondary modal-action-btn" onclick="document.getElementById('editCategoryModal').classList.add('hidden-section');">
+                                    <i class="fas fa-times"></i> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Brand Modal -->
+            <div class="modal hidden-section" id="editBrandModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-edit"></i> Editar Marca</h3>
+                        <button class="close-modal" onclick="document.getElementById('editBrandModal').style.display = 'none';">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editBrandForm">
+                            <div class="form-group">
+                                <label for="editBrandName">Nome da Marca *</label>
+                                <input type="text" id="editBrandName" required placeholder="Nome da marca...">
+                            </div>
+                            <input type="hidden" id="editBrandOldName">
+                            <div class="modal-actions">
+                                <button type="submit" class="btn btn-primary modal-action-btn">
+                                    <i class="fas fa-save"></i> Salvar
+                                </button>
+                                <button type="button" class="btn btn-secondary modal-action-btn" onclick="document.getElementById('editBrandModal').classList.add('hidden-section');">
+                                    <i class="fas fa-times"></i> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brands Section -->
+            <div id="brands-section" class="hidden-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-trademark"></i> Gerenciar Marcas</h2>
+                    <p>Visualize e gerencie as marcas cadastradas no sistema</p>
+                </div>
+
+                <div class="management-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-plus-circle"></i> Adicionar Nova Marca</h3>
+                    </div>
+                    <form id="brandForm" class="management-form">
+                        <div class="form-row-management">
+                            <div class="form-group-management">
+                                <label for="newBrandInput">Nome da Marca *</label>
+                                <input type="text" id="newBrandInput" placeholder="Ex: Bosch, NGK, Brembo..." required>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="addNewBrand()">
+                                <i class="fas fa-plus"></i> Adicionar Marca
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="management-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-list"></i> Marcas Cadastradas (Total: <span id="totalBrandsDisplay">0</span>)</h3>
+                        <div class="card-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="brandSearchInput" placeholder="Buscar marca...">
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="management-table">
+                            <thead>
+                                <tr>
+                                    <th>Marca</th>
+                                    <th>Produtos</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="brandsList">
+                                <!-- Marcas serão carregadas aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Form Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="modalTitle">Novo Produto</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm" class="product-form">
+                    <input type="hidden" id="productId">
+                    
+                    <h4 class="form-section-title">Informações Básicas</h4>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productSubcategory">Subcategoria *</label>
+                            <select id="productSubcategory" required onchange="generateProductName(); updateSubcategoryFields()">
+                                <option value="">Selecione...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productCode">Código/Referência</label>
+                            <input type="text" id="productCode" placeholder="Auto-gerado ou manual">
+                        </div>
+                    </div>
+
+                    <!-- Container para campos específicos da subcategoria -->
+                    <div id="subcategorySpecificFields" class="subcategory-fields-container">
+                        <!-- Campos específicos serão renderizados aqui dinamicamente -->
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productBrand">Marca do Produto *</label>
+                            <select id="productBrand" required onchange="generateProductName()">
+                                <option value="">Selecione...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productYear">Ano(s)</label>
+                            <select id="productYear" multiple size="8" onchange="generateProductName(); updateCompatibleModels()" title="Ctrl/Cmd para múltiplos"></select>
+                            <small>Selecione vários anos; ou escolha início/fim e clique em "Selecionar intervalo". Use "Limpar" para resetar.</small>
+                            <div class="form-row year-range-row">
+                                <select id="productYearStart" title="Ano inicial"></select>
+                                <span>até</span>
+                                <select id="productYearEnd" title="Ano final"></select>
+                                <button type="button" class="btn btn-secondary" id="applyYearRangeBtn">Selecionar intervalo</button>
+                                <button type="button" class="btn" id="clearYearSelectionBtn">Limpar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Modelos Compatíveis</label>
+                        <div class="models-filter-wrapper">
+                            <input type="text" id="modelSearchInput" placeholder="Buscar modelo de moto..." class="model-search">
+                            <div class="models-list-wrapper">
+                                <div class="models-list" id="modelsList">
+                                    <!-- Modelos serão carregados aqui -->
+                                </div>
+                            </div>
+                            <div class="selected-models" id="selectedModels">
+                                <!-- Modelos selecionados aparecerão aqui -->
+                            </div>
+                        </div>
+                        <small>Selecione os modelos de motos compatíveis com este produto</small>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productColor">Cor/Acabamento (Opcional)</label>
+                            <select id="productColor" onchange="generateProductName()">
+                                <option value="">Selecione...</option>
+                                <option value="preto">Preto</option>
+                                <option value="cromado">Cromado</option>
+                                <option value="natural">Natural</option>
+                                <option value="prata">Prata</option>
+                                <option value="vermelho">Vermelho</option>
+                                <option value="azul">Azul</option>
+                                <option value="branco">Branco</option>
+                                <option value="dourado">Dourado</option>
+                                <option value="amarelo">Amarelo</option>
+                                <option value="verde">Verde</option>
+                                <option value="laranja">Laranja</option>
+                                <option value="roxo">Roxo</option>
+                                <option value="cinza">Cinza</option>
+                                <option value="marrom">Marrom</option>
+                                <option value="rosa">Rosa</option>
+                                <option value="transparente">Transparente</option>
+                                <option value="azul-metalico">Azul Metálico</option>
+                                <option value="vermelho-metalico">Vermelho Metálico</option>
+                                <option value="preto-metalico">Preto Metálico</option>
+                                <option value="branco-perolizado">Branco Perolizado</option>
+                                <option value="preto-perolizado">Preto Perolizado</option>
+                                <option value="cinza-perolizado">Cinza Perolizado</option>
+                                <option value="prata-perolizado">Prata Perolizado</option>
+                                <option value="rosa-perolizado">Rosa Perolizado</option>
+                                <option value="transparente-perolizado">Transparente Perolizado</option>
+                                <option value="azul-perolizado">Azul Perolizado</option>
+                                <option value="amarelo-perolizado">Amarelo Perolizado</option>
+                                <option value="vermelho-perolizado">Vermelho Perolizado</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label for="productName">Nome do Produto (Auto-gerado)</label>
+                        <input type="text" id="productName" readonly placeholder="Será gerado automaticamente">
+                        <small>Composto por: Subcategoria + Marca + Aplicação + Ano + Cor (opcional)</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="productImage">Imagem Principal do Produto</label>
+                            <input type="file" id="productImage" accept="image/*" onclick="event.stopPropagation()">
+                            <input type="hidden" id="productImageData">
+                            <div class="image-preview-wrapper">
+                                <img id="productImagePreview" alt="Pré-visualização" class="image-preview hidden-section">
+                            </div>
+                            <small>Imagem principal do produto (JPG, PNG)</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productGallery">Galeria de Imagens (opcional)</label>
+                        <input type="file" id="productGallery" accept="image/*" multiple>
+                        <input type="hidden" id="productGalleryData">
+                        <div id="galleryPreview" class="gallery-preview">
+                            <!-- Previews serão inseridos aqui -->
+                        </div>
+                        <small>Múltiplas imagens adicionais para galeria (JPG, PNG)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productDescription">Descrição do Produto</label>
+                        <textarea id="productDescription" placeholder="Descrição detalhada do produto" rows="3"></textarea>
+                    </div>
+
+                    <h4 class="form-section-title">Informações Técnicas</h4>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productMaterial">Material</label>
+                            <select id="productMaterial">
+                                <option value="">Selecione...</option>
+                                <option value="aco-inox">Aço Inoxidável</option>
+                                <option value="aco-carbono">Aço Carbono</option>
+                                <option value="aluminio">Alumínio</option>
+                                <option value="pvc">PVC</option>
+                                <option value="plastico-abs">Plástico ABS</option>
+                                <option value="borracha">Borracha</option>
+                                <option value="ceramica">Cerâmica</option>
+                                <option value="composito">Compósito</option>
+                                <option value="ferro-fundido">Ferro Fundido</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productWeight">Especificações</label>
+                            <input type="text" id="productWeight" placeholder="Ex: 250g, GG, 55cm, ESD/KS">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productOEM">Código OEM/Original</label>
+                        <input type="text" id="productOEM" placeholder="Ex: 06435-KVS-900">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productSpecifications">Especificações Adicionais</label>
+                        <textarea id="productSpecifications" placeholder="Outras especificações técnicas relevantes" rows="2"></textarea>
+                    </div>
+
+                    <h4 class="form-section-title">Informações Comerciais</h4>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productStock">Estoque</label>
+                            <input type="number" id="productStock" min="0" placeholder="Quantidade em estoque">
+                        </div>
+                        <div class="form-group">
+                            <label for="productMinStock">Estoque Mínimo</label>
+                            <input type="number" id="productMinStock" min="0" placeholder="Alerta de estoque">
+                        </div>
+                        <div class="form-group">
+                            <label for="productWarranty">Garantia</label>
+                            <select id="productWarranty">
+                                <option value="">Selecione...</option>
+                                <option value="30-dias">30 dias</option>
+                                <option value="60-dias">60 dias</option>
+                                <option value="90-dias">90 dias</option>
+                                <option value="6-meses">6 meses</option>
+                                <option value="1-ano">1 ano</option>
+                                <option value="2-anos">2 anos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productStatus">Status</label>
+                            <select id="productStatus">
+                                <option value="active">Ativo</option>
+                                <option value="inactive">Inativo</option>
+                                <option value="discontinued">Descontinuado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productIcon">Ícone (Emoji)</label>
+                            <input type="text" id="productIcon" placeholder="Ex: 🔧" maxlength="2">
+                            <small>Use um emoji para representar o produto</small>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Salvar Produto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div class="modal" id="importModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Importar Produtos</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="import-area">
+                    <i class="fas fa-file-upload"></i>
+                    <p>Arraste um arquivo JSON ou clique para selecionar</p>
+                    <input type="file" id="fileInput" accept=".json" class="hidden-file-input" title="Selecionar arquivo JSON para importar">
+                    <button class="btn btn-primary" id="selectFileBtn">Selecionar Arquivo</button>
+                </div>
+                <div class="import-info">
+                    <p><strong>Formato esperado:</strong> Arquivo JSON contendo um array de produtos</p>
+                    <small>Os produtos existentes serão substituídos</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>Confirmar Ação</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">Tem certeza que deseja excluir este produto?</p>
+                <div class="form-actions">
+                    <button class="btn btn-secondary" id="confirmCancelBtn">Cancelar</button>
+                    <button class="btn btn-danger" id="confirmDeleteBtn">
+                        <i class="fas fa-trash"></i> Excluir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="product-data.js"></script>
+    <script src="indexedDB-storage.js"></script>
+    <script src="subcategory-fields.js"></script>
+    <script src="ux-improvements.js"></script>
+    <script src="modals-improvements.js"></script>
+    <script src="admin-script.js"></script>
+    <script src="admin-enhancements.js"></script>
+</body>
+</html>
