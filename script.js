@@ -50,46 +50,25 @@ let selectedProduct = null;
 let inlineDetailsImages = [];
 let lastLoadedProducts = JSON.stringify(products);
 
-// Update products periodically from localStorage and IndexedDB
-setInterval(async () => {
-    try {
-        let updatedProducts = null;
-        
-        // Tentar carregar do IndexedDB primeiro
-        if (typeof loadAllProductsFromDB === 'function') {
-            updatedProducts = await loadAllProductsFromDB();
-            if (updatedProducts && updatedProducts.length > 0) {
-                const currentString = JSON.stringify(updatedProducts);
-                if (currentString !== lastLoadedProducts) {
-                    products = updatedProducts;
-                    lastLoadedProducts = currentString;
-                    filteredProducts = [...products];
-                    populateBrandFilter();
-                    populateApplicationFilter();
-                    filterProductsEnhanced();
-                }
-                return; // Sucesso com IndexedDB
-            }
-        }
-        
-        // Fallback para localStorage
-        const updated = localStorage.getItem('motoparts_products');
-        if (updated) {
-            updatedProducts = JSON.parse(updated);
-            const currentString = JSON.stringify(updatedProducts);
+window.addEventListener('storage', (e) => {
+    if (e.key === 'motoparts_products' && e.newValue) {
+        try {
+            const updated = JSON.parse(e.newValue);
+            const currentString = JSON.stringify(updated);
             if (currentString !== lastLoadedProducts) {
-                products = updatedProducts;
+                products = updated;
                 lastLoadedProducts = currentString;
                 filteredProducts = [...products];
                 populateBrandFilter();
                 populateApplicationFilter();
                 filterProductsEnhanced();
+                console.log(`✓ Produtos sincronizados de outra aba (${products.length} itens)`);
             }
+        } catch (err) {
+            console.warn('Erro ao sincronizar produtos:', err);
         }
-    } catch (e) {
-        console.error('Erro ao atualizar produtos:', e);
     }
-}, 500);
+});
 
 // Initialize IndexedDB on page load
 if (typeof initDB === 'function') {
