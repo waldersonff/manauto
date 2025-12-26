@@ -531,8 +531,8 @@ label {
     }
 }
 
-/* 17. DARK MODE SUPPORT */
-@media (prefers-color-scheme: dark) {
+/* 17. DARK MODE SUPPORT - DESABILITADO */
+/* @media (prefers-color-scheme: dark) {
     :root {
         --secondary-color: #2a2a2a;
         --text-color: #e0e0e0;
@@ -550,7 +550,7 @@ label {
     .card {
         background: #2a2a2a;
     }
-}
+} */
 
 /* 18. ANIMATION UTILITIES */
 .fade-in {

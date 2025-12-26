@@ -182,13 +182,74 @@ function renderProductsPaginated() {
 
 }
 
-// ===== FILTRO POR CATEGORIA DO GRID =====
+// ===== VISUALIZAÇÃO DE SUBCATEGORIAS AO CLICAR NA CATEGORIA =====
 function filterByCategory(category) {
     const categoryFilter = document.getElementById('categoryFilter');
     if (categoryFilter) {
         categoryFilter.value = category;
-        filterProductsEnhanced();
-        updateBreadcrumb();
+    }
+
+    renderCategorySublist(category);
+}
+
+function renderCategorySublist(category) {
+    const grid = document.getElementById('productsGrid');
+    const pagination = document.getElementById('paginationControls');
+    const catalogEl = document.getElementById('catalog');
+    const searchEl = document.getElementById('searchInput');
+
+    if (!grid) return;
+
+    const data = (typeof subcategoriesData !== 'undefined') ? subcategoriesData[category] : null;
+    const items = data && Array.isArray(data.items) ? data.items : [];
+    const label = data?.label || getCategoryName(category) || 'Categoria';
+
+    if (pagination) pagination.classList.add('hidden-section');
+    if (searchEl) searchEl.value = '';
+
+    // Monta visualização de subcategorias com CTA para ver produtos
+    grid.innerHTML = `
+        <div class="subcategory-panel">
+            <div class="subcategory-header">
+                <p class="eyebrow">Categoria</p>
+                <h3>${label}</h3>
+                <p class="subcategory-subtitle">Escolha uma subcategoria ou veja todos os produtos desta categoria.</p>
+            </div>
+            <div class="subcategory-badges">
+                ${items.map(item => `
+                    <button class="subcategory-pill" data-sub="${item}">
+                        <i class="fas fa-tag"></i> ${item}
+                    </button>
+                `).join('') || '<p class="empty-subcategories">Nenhuma subcategoria cadastrada.</p>'}
+            </div>
+            <div class="subcategory-actions">
+                <button class="btn btn-primary" id="showCategoryProducts">Ver produtos dessa categoria</button>
+            </div>
+        </div>
+    `;
+
+    // Scroll suave para o catálogo
+    if (catalogEl) catalogEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Clique em subcategoria → aplica busca pelo nome da subcategoria e filtra
+    grid.querySelectorAll('.subcategory-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (searchEl) searchEl.value = btn.dataset.sub;
+            if (pagination) pagination.classList.remove('hidden-section');
+            filterProductsEnhanced();
+            updateBreadcrumb();
+        });
+    });
+
+    // Botão para ver todos os produtos da categoria
+    const showBtn = document.getElementById('showCategoryProducts');
+    if (showBtn) {
+        showBtn.addEventListener('click', () => {
+            if (searchEl) searchEl.value = '';
+            if (pagination) pagination.classList.remove('hidden-section');
+            filterProductsEnhanced();
+            updateBreadcrumb();
+        });
     }
 }
 

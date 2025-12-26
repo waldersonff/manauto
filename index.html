@@ -12,16 +12,11 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="enhancements.css">
     <link rel="stylesheet" href="ux-improvements.css">
+    <link rel="stylesheet" href="modals-improvements.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <img src="Design_sem_nome-removebg-preview.png" alt="MotoPartes" class="loading-logo">
-        <div class="loading-spinner"></div>
-    </div>
-
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -484,26 +479,58 @@
         </div>
     </div>
 
-    
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <button class="chat-widget-btn" id="chatWidgetBtn" title="Abrir chat" aria-label="Abrir chat">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="chat-header-content">
+                        <h4>Manaus Automotive</h4>
+                        <p>Online</p>
+                    </div>
+                </div>
+                <button class="chat-close-btn" id="chatCloseBtn" aria-label="Fechar chat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>👋 Olá! Bem-vindo à Manaus Automotive! Como posso ajudá-lo?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-suggestions" id="chatSuggestions">
+                <button class="suggestion-btn" data-message="Olá">Olá</button>
+                <button class="suggestion-btn" data-message="Ver categorias">📂 Categorias</button>
+                <button class="suggestion-btn" data-message="Ver marcas">🏷️ Marcas</button>
+                <button class="suggestion-btn" data-message="Falar com vendedor">📞 Vendedor</button>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem..." aria-label="Chat input">
+                <button class="chat-send-btn" id="chatSendBtn" aria-label="Enviar mensagem">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <!-- 1. Configuração de ambiente (DEVE ser primeiro!) -->
-    <script src="config.js"></script>
     
-    <!-- 2. Dados padrão de produtos -->
-    <script src="product-data.js"></script>
-    
-    <!-- 3. Enhancements e melhorias de UX -->
     <script src="enhancements.js"></script>
     <script src="ux-improvements.js"></script>
-    
-    <!-- 4. Armazenamento e sincronização -->
+    <script src="professional-ux.js"></script>
+    <script src="product-data.js"></script>
     <script src="indexedDB-storage.js"></script>
     <script src="sync-indexdb-products.js"></script>
-    
-    <!-- 5. Painel de admin (apenas em desenvolvimento) -->
-    <script src="sync-panel-admin.js"></script>
-    
-    <!-- 6. Script principal (DEVE ser último!) -->
     <script src="script.js"></script>
 </body>
 
