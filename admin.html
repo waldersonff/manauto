@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="Design_sem_nome-removebg-preview.png">
     <title>Administração - Gerenciamento de Produtos</title>
+    <!-- Admin Styles -->
+    <link rel="stylesheet" href="professional-ux.css">
     <link rel="stylesheet" href="admin-styles.css">
     <link rel="stylesheet" href="ux-improvements.css">
     <link rel="stylesheet" href="modals-improvements.css">
@@ -71,6 +73,20 @@
                         <p>Marcas</p>
                     </div>
                 </div>
+                <div class="stat-card warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div class="stat-info">
+                        <h3 id="lowStockCount">0</h3>
+                        <p>Estoque crítico</p>
+                    </div>
+                </div>
+                <div class="stat-card danger">
+                    <i class="fas fa-box-open"></i>
+                    <div class="stat-info">
+                        <h3 id="zeroStockCount">0</h3>
+                        <p>Sem estoque</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Filters -->
@@ -82,6 +98,12 @@
                 <select id="filterBrand" class="filter-select" title="Filtrar produtos por marca">
                     <option value="all">Todas as Marcas</option>
                 </select>
+                <div class="filter-chips" id="stockFilters">
+                    <button class="chip active" data-stock-filter="all">Todos</button>
+                    <button class="chip" data-stock-filter="critical">Estoque crítico</button>
+                    <button class="chip" data-stock-filter="zero">Sem estoque</button>
+                    <button class="chip" data-stock-filter="active">Ativos</button>
+                </div>
             </div>
 
             <!-- Products Table -->
@@ -180,7 +202,7 @@
             </div>
 
             <!-- Edit Category Modal -->
-            <div class="modal hidden-section" id="editCategoryModal">
+            <div class="modal modal-glass hidden-section" id="editCategoryModal">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3><i class="fas fa-edit"></i> Editar Categoria</h3>
@@ -220,7 +242,7 @@
             </div>
 
             <!-- Edit Brand Modal -->
-            <div class="modal hidden-section" id="editBrandModal">
+            <div class="modal modal-glass hidden-section" id="editBrandModal">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3><i class="fas fa-edit"></i> Editar Marca</h3>
@@ -298,11 +320,15 @@
     </div>
 
     <!-- Product Form Modal -->
-    <div class="modal" id="productModal">
+    <div class="modal modal-glass" id="productModal">
         <div class="modal-content large">
             <div class="modal-header">
-                <h3 id="modalTitle">Novo Produto</h3>
-                <button class="close-modal">&times;</button>
+                <div class="modal-title-stack">
+                    <p class="eyebrow">Cadastro rápido</p>
+                    <h3 id="modalTitle">Novo Produto</h3>
+                    <p class="modal-subtitle">Subcategoria, marca e estoque mínimo garantem alertas e vitrine completa.</p>
+                </div>
+                <button class="close-modal" aria-label="Fechar">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="productForm" class="product-form">
@@ -409,25 +435,33 @@
                         <input type="text" id="productName" readonly placeholder="Será gerado automaticamente">
                         <small>Composto por: Subcategoria + Marca + Aplicação + Ano + Cor (opcional)</small>
                         </div>
-                        <div class="form-group">
+                    </div>
+
+                    <div class="media-preview-card">
+                        <div class="media-visual">
+                            <div class="image-preview-wrapper hero-preview">
+                                <img id="productImagePreview" alt="Pré-visualização" class="image-preview hidden-section">
+                                <div class="preview-placeholder">
+                                    <i class="fas fa-image"></i>
+                                    <p>Pré-visualização do produto</p>
+                                    <small>Envie uma imagem principal ou use a galeria</small>
+                                </div>
+                            </div>
+                            <div id="galleryPreview" class="gallery-preview gallery-preview-large">
+                                <!-- Previews serão inseridos aqui -->
+                            </div>
+                        </div>
+                        <div class="media-inputs">
                             <label for="productImage">Imagem Principal do Produto</label>
                             <input type="file" id="productImage" accept="image/*" onclick="event.stopPropagation()">
                             <input type="hidden" id="productImageData">
-                            <div class="image-preview-wrapper">
-                                <img id="productImagePreview" alt="Pré-visualização" class="image-preview hidden-section">
-                            </div>
                             <small>Imagem principal do produto (JPG, PNG)</small>
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="productGallery">Galeria de Imagens (opcional)</label>
-                        <input type="file" id="productGallery" accept="image/*" multiple>
-                        <input type="hidden" id="productGalleryData">
-                        <div id="galleryPreview" class="gallery-preview">
-                            <!-- Previews serão inseridos aqui -->
+                            <label for="productGallery">Galeria de Imagens (opcional)</label>
+                            <input type="file" id="productGallery" accept="image/*" multiple>
+                            <input type="hidden" id="productGalleryData">
+                            <small>Múltiplas imagens adicionais para galeria (JPG, PNG)</small>
                         </div>
-                        <small>Múltiplas imagens adicionais para galeria (JPG, PNG)</small>
                     </div>
 
                     <div class="form-group">
@@ -522,7 +556,7 @@
     </div>
 
     <!-- Import Modal -->
-    <div class="modal" id="importModal">
+    <div class="modal modal-glass" id="importModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Importar Produtos</h3>
@@ -544,11 +578,15 @@
     </div>
 
     <!-- Confirmation Modal -->
-    <div class="modal" id="confirmModal">
+    <div class="modal modal-glass" id="confirmModal">
         <div class="modal-content small">
             <div class="modal-header">
-                <h3>Confirmar Ação</h3>
-                <button class="close-modal">&times;</button>
+                <div class="modal-title-stack">
+                    <p class="eyebrow">Confirmação</p>
+                    <h3>Confirmar Ação</h3>
+                    <p class="modal-subtitle">Esta operação impacta produtos existentes.</p>
+                </div>
+                <button class="close-modal" aria-label="Fechar">&times;</button>
             </div>
             <div class="modal-body">
                 <p id="confirmMessage">Tem certeza que deseja excluir este produto?</p>
@@ -562,6 +600,8 @@
         </div>
     </div>
 
+    <!-- Professional UX/UI JavaScript -->
+    <script src="professional-ux.js"></script>
     <script src="product-data.js"></script>
     <script src="indexedDB-storage.js"></script>
     <script src="subcategory-fields.js"></script>

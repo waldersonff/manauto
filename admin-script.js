@@ -114,6 +114,7 @@ let filteredProducts = [];
 let editingProductId = null;
 // Variável global para manter estado atual das subcategorias
 let currentSubcategoriesData = null;
+let currentStockFilter = 'all';
 
 // Variáveis de paginação
 let currentPage = 1;
@@ -395,6 +396,17 @@ function setupEventListeners() {
     filterCategory.addEventListener('change', filterProducts);
     filterBrand.addEventListener('change', filterProducts);
 
+    const stockFilters = document.getElementById('stockFilters');
+    if (stockFilters) {
+        stockFilters.addEventListener('click', (event) => {
+            const chip = event.target.closest('.chip');
+            if (!chip) return;
+            currentStockFilter = chip.dataset.stockFilter || 'all';
+            stockFilters.querySelectorAll('.chip').forEach(btn => btn.classList.toggle('active', btn === chip));
+            filterProducts();
+        });
+    }
+
     // Import file
     document.getElementById('selectFileBtn').addEventListener('click', () => {
         document.getElementById('fileInput').click();
@@ -495,9 +507,21 @@ function updateStats() {
     const allBrands = getAllBrands();
     const totalBrands = allBrands.length;
 
+    const lowStock = products.filter(product => {
+        const stock = Number(product.stock || 0);
+        const min = Number(product.minStock || 0);
+        return !isNaN(stock) && stock <= Math.max(1, min);
+    }).length;
+
+    const zeroStock = products.filter(product => Number(product.stock || 0) === 0).length;
+
     document.getElementById('totalProducts').textContent = products.length;
     document.getElementById('totalCategories').textContent = totalCategories;
     document.getElementById('totalBrands').textContent = totalBrands;
+    const lowEl = document.getElementById('lowStockCount');
+    const zeroEl = document.getElementById('zeroStockCount');
+    if (lowEl) lowEl.textContent = lowStock;
+    if (zeroEl) zeroEl.textContent = zeroStock;
 }
 
 // Populate filters
@@ -633,6 +657,55 @@ function applyYearRange() {
     });
 }
 
+// Gerar nome do produto automaticamente (Subcategoria + Marca + Aplicação + Ano + Cor)
+function generateProductName() {
+    const subcategory = (document.getElementById('productSubcategory')?.value || '').trim();
+    const brand = (document.getElementById('productBrand')?.value || '').trim();
+    const color = (document.getElementById('productColor')?.value || '').trim();
+
+    // Preferir modelos compatíveis; em seguida aplicações; por último campo de aplicação simples
+    const models = Array.isArray(window.selectedModelsList) ? window.selectedModelsList : [];
+    const apps = Array.isArray(window.selectedApplicationsList) ? window.selectedApplicationsList : [];
+    const applicationFallback = (safeValue('productApplication') || '').trim();
+    let applicationStr = '';
+    if (models && models.length) {
+        applicationStr = models.slice(0, 3).join(' / ');
+    } else if (apps && apps.length) {
+        applicationStr = apps.slice(0, 3).join(' / ');
+    } else if (applicationFallback) {
+        applicationStr = applicationFallback;
+    }
+
+    // Ano: usar intervalo selecionado (min-max) se houver múltiplos
+    const years = getSelectedYears();
+    let yearStr = '';
+    if (Array.isArray(years) && years.length) {
+        const min = Math.min(...years.map(y => Number(y) || 0));
+        const max = Math.max(...years.map(y => Number(y) || 0));
+        if (min && max) {
+            yearStr = min === max ? String(min) : `${min}-${max}`;
+        }
+    } else {
+        yearStr = (safeValue('productYear') || '').trim();
+    }
+
+    const parts = [];
+    if (subcategory) parts.push(subcategory);
+    if (brand) parts.push(brand.toUpperCase());
+    if (applicationStr) parts.push(applicationStr);
+    if (yearStr) parts.push(yearStr);
+    if (color) parts.push(color);
+
+    const name = parts.join(' - ');
+    const nameInput = document.getElementById('productName');
+    if (nameInput) {
+        nameInput.value = name;
+    }
+}
+
+// Expor globalmente para uso em atributos inline
+window.generateProductName = generateProductName;
+
 // Get category name
 function getCategoryName(category) {
     const categories = {
@@ -644,6 +717,22 @@ function getCategoryName(category) {
         'carroceria': 'Carroceria'
     };
     return categories[category] || category;
+}
+
+function applyStockFilter(product) {
+    const stock = Number(product.stock || 0);
+    const min = Number(product.minStock || 0);
+
+    switch (currentStockFilter) {
+        case 'critical':
+            return stock <= Math.max(1, min);
+        case 'zero':
+            return stock === 0;
+        case 'active':
+            return (product.status || 'active') === 'active';
+        default:
+            return true;
+    }
 }
 
 // Filter products
@@ -659,8 +748,9 @@ function filterProducts() {
             (product.description && product.description.toLowerCase().includes(searchTerm));
         const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
         const matchesBrand = selectedBrand === 'all' || product.brand === selectedBrand;
+        const matchesStock = applyStockFilter(product);
         
-        return matchesSearch && matchesCategory && matchesBrand;
+        return matchesSearch && matchesCategory && matchesBrand && matchesStock;
     });
 
     currentPage = 1; // Resetar para primeira página ao filtrar

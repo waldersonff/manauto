@@ -143,8 +143,19 @@ function goToPage(page) {
 }
 
 function renderProductsPaginated() {
+    if (!productsGrid) {
+        productsGrid = document.getElementById('productsGrid');
+    }
+    
     if (paginatedProducts.length === 0) {
-        productsGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 3rem; color: #999;">Nenhum produto encontrado.</p>';
+        if (productsGrid) {
+            productsGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 3rem; color: #999;">Nenhum produto encontrado.</p>';
+        }
+        return;
+    }
+
+    if (!productsGrid) {
+        console.error('❌ productsGrid não encontrado!');
         return;
     }
 
@@ -152,30 +163,23 @@ function renderProductsPaginated() {
         const description = (product.description || '').trim();
 
         return `
-        <div class="product-card" data-id="${product.id}">
-            <div class="product-image">${product.image ? `<img src="${product.image}" alt="${product.name}">` : (product.icon || '📦')}</div>
+        <div class="product-card" data-id="${product.id}" onclick="showProductDetails(${product.id})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'){showProductDetails(${product.id})}">
+            <div class="product-image">${(() => { const imgs = collectImages(product); return imgs.length ? `<img src="${imgs[0]}" alt="${product.name}" loading="lazy" decoding="async">` : (product.icon || '📦'); })()}</div>
             <div class="product-info">
                 <div class="product-category">${getCategoryName(product.category)}</div>
                 <h4 class="product-name">${product.name}</h4>
                 <div class="product-details-compact">
                     <div class="product-code"><i class="fas fa-barcode"></i> ${product.code}</div>
                     <div class="product-brand"><i class="fas fa-trademark"></i> ${product.brand.toUpperCase()}</div>
-                    ${product.application ? `<div class="product-application"><i class="fas fa-motorcycle"></i> ${product.application}</div>` : ''}
+                    ${(() => { const apps = collectApplications(product); const label = apps[0] || product.application; return label ? `<div class="product-application"><i class="fas fa-motorcycle"></i> ${label}</div>` : ''; })()}
                     ${product.year ? `<div class="product-year"><i class="fas fa-calendar"></i> ${product.year}</div>` : ''}
                 </div>
                 ${description ? `<p class="product-description">${description}</p>` : ''}
-                <div class="product-actions">
-                    <button class="view-details" onclick="event.stopPropagation(); showProductDetails(${product.id})">
-                        <i class="fas fa-eye"></i> Ver Detalhes
-                    </button>
-                    <button class="request-info" onclick="event.stopPropagation(); requestInfo(${product.id})">
-                        <i class="fas fa-envelope"></i> Informações
-                    </button>
-                </div>
             </div>
         </div>
     `;
     }).join('');
+
 }
 
 // ===== FILTRO POR CATEGORIA DO GRID =====
@@ -188,12 +192,42 @@ function filterByCategory(category) {
     }
 }
 
+// ===== FILTRO POR MARCA (PARCEIROS) =====
+function filterByBrand(brand) {
+    const brandFilter = document.getElementById('brandFilter');
+    if (brandFilter) {
+        // Garantir que o option existe; se não, adicionar dinamicamente
+        const hasOption = Array.from(brandFilter.options).some(opt => (opt.value || '').toLowerCase() === (brand || '').toLowerCase());
+        if (!hasOption) {
+            const opt = document.createElement('option');
+            opt.value = brand;
+            opt.textContent = (brand || '').toUpperCase();
+            brandFilter.appendChild(opt);
+        }
+        brandFilter.value = brand;
+    }
+    // Limpa outros filtros para focar na marca
+    const categoryFilterEl = document.getElementById('categoryFilter');
+    if (categoryFilterEl) categoryFilterEl.value = 'all';
+    const appEl = document.getElementById('applicationFilter');
+    if (appEl) appEl.value = 'all';
+    const searchInputEl = document.getElementById('searchInput');
+    if (searchInputEl) searchInputEl.value = '';
+
+    filterProductsEnhanced();
+    updateBreadcrumb();
+    // Scroll suave até o catálogo
+    const catalogEl = document.getElementById('catalog');
+    if (catalogEl) catalogEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 // ===== BREADCRUMBS =====
 function updateBreadcrumb() {
     const breadcrumbSection = document.getElementById('breadcrumbsSection');
     const breadcrumbContent = document.getElementById('breadcrumbContent');
     const categoryFilter = document.getElementById('categoryFilter');
     const brandFilter = document.getElementById('brandFilter');
+    const applicationFilter = document.getElementById('applicationFilter');
     const searchInput = document.getElementById('searchInput');
     
     const parts = [];
@@ -204,6 +238,9 @@ function updateBreadcrumb() {
     
     if (brandFilter.value !== 'all') {
         parts.push(`<span>Marca: ${brandFilter.value.toUpperCase()}</span>`);
+    }
+    if (applicationFilter && applicationFilter.value !== 'all') {
+        parts.push(`<span>Aplicação: ${applicationFilter.value}</span>`);
     }
     
     if (searchInput.value.trim()) {
@@ -221,6 +258,8 @@ function updateBreadcrumb() {
 function clearFilters() {
     document.getElementById('categoryFilter').value = 'all';
     document.getElementById('brandFilter').value = 'all';
+    const appEl = document.getElementById('applicationFilter');
+    if (appEl) appEl.value = 'all';
     document.getElementById('searchInput').value = '';
     document.getElementById('sortFilter').value = 'name';
     filterProductsEnhanced();
@@ -229,9 +268,17 @@ function clearFilters() {
 
 // ===== BUSCA APRIMORADA (COM OEM) =====
 function filterProductsEnhanced() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const selectedCategory = categoryFilter.value;
-    const selectedBrand = brandFilter.value;
+    // Garantir que os elementos existem
+    if (!searchInput) searchInput = document.getElementById('searchInput');
+    if (!categoryFilter) categoryFilter = document.getElementById('categoryFilter');
+    if (!brandFilter) brandFilter = document.getElementById('brandFilter');
+    if (!sortFilter) sortFilter = document.getElementById('sortFilter');
+    const applicationFilterEl = document.getElementById('applicationFilter');
+    
+    const searchTerm = (searchInput && searchInput.value) ? searchInput.value.toLowerCase() : '';
+    const selectedCategory = (categoryFilter && categoryFilter.value) ? categoryFilter.value : 'all';
+    const selectedBrand = (brandFilter && brandFilter.value) ? brandFilter.value : 'all';
+    const selectedApplication = (applicationFilterEl && applicationFilterEl.value) ? applicationFilterEl.value : 'all';
 
     filteredProducts = products.filter(product => {
         // Buscar em todos os campos possíveis
@@ -257,9 +304,19 @@ function filterProductsEnhanced() {
              ));
         
         const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-        const matchesBrand = selectedBrand === 'all' || product.brand === selectedBrand;
-        
-        return matchesSearch && matchesCategory && matchesBrand;
+        const matchesBrand = selectedBrand === 'all' || (
+            selectedBrand && (
+                (product.brand && product.brand.toLowerCase() === selectedBrand.toLowerCase()) ||
+                (product.manufacturer && product.manufacturer.toLowerCase() === selectedBrand.toLowerCase()) ||
+                (product.supplierBrand && product.supplierBrand.toLowerCase() === selectedBrand.toLowerCase()) ||
+                (product.vendorBrand && product.vendorBrand.toLowerCase() === selectedBrand.toLowerCase())
+            )
+        );
+        const apps = collectApplications(product);
+        const matchesApplication = selectedApplication === 'all' ||
+            apps.some(app => app.toLowerCase().includes(selectedApplication.toLowerCase()));
+
+        return matchesSearch && matchesCategory && matchesBrand && matchesApplication;
     });
 
     sortProductsEnhanced();
@@ -267,6 +324,7 @@ function filterProductsEnhanced() {
     updatePagination();
     renderProductsPaginated();
     updateBreadcrumb();
+    updateCatalogInsights();
 }
 
 // ===== ORDENAÇÃO EXPANDIDA =====
@@ -289,13 +347,35 @@ function sortProductsEnhanced() {
         case 'newest':
             filteredProducts.sort((a, b) => (b.id || 0) - (a.id || 0));
             break;
-        case 'stock-desc':
-            filteredProducts.sort((a, b) => (b.stock || 0) - (a.stock || 0));
-            break;
-        case 'stock-asc':
-            filteredProducts.sort((a, b) => (a.stock || 0) - (b.stock || 0));
-            break;
     }
+}
+
+// Atualiza indicadores do painel público com base nos produtos filtrados
+function updateCatalogInsights() {
+    const totalEl = document.getElementById('insightTotalProducts');
+    const catEl = document.getElementById('insightCategories');
+    const brandEl = document.getElementById('insightBrands');
+    const mediaEl = document.getElementById('insightWithMedia');
+
+    if (!totalEl || !catEl || !brandEl || !mediaEl) return;
+
+    const source = Array.isArray(filteredProducts) && filteredProducts.length ? filteredProducts : products;
+    const categories = new Set();
+    const brands = new Set();
+    let withMedia = 0;
+
+    source.forEach(product => {
+        if (product.category) categories.add(product.category);
+        if (product.brand) brands.add(product.brand);
+        if (product.image || (product.gallery && product.gallery.length)) {
+            withMedia += 1;
+        }
+    });
+
+    totalEl.textContent = source.length;
+    catEl.textContent = categories.size;
+    brandEl.textContent = brands.size;
+    mediaEl.textContent = withMedia;
 }
 
 // Expor funções globalmente
@@ -304,7 +384,10 @@ window.goToSlide = goToSlide;
 window.changePage = changePage;
 window.goToPage = goToPage;
 window.filterByCategory = filterByCategory;
+window.filterByBrand = filterByBrand;
 window.clearFilters = clearFilters;
+window.collectApplications = collectApplications;
+window.collectImages = collectImages;
 
 // ===== GALERIA DE IMAGENS =====
 function showGalleryLightbox(imageSrc) {

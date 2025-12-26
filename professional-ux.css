@@ -1,0 +1,104 @@
+/* Professional UX layer for admin forms and modals */
+:root {
+    --ux-surface: #ffffff;
+    --ux-muted: #7a869a;
+    --ux-ink: #111827;
+    --ux-border: #e4e7ec;
+    --ux-shadow: 0 14px 40px rgba(17, 24, 39, 0.12);
+}
+
+.form-shell {
+    background: var(--ux-surface);
+    border: 1px solid var(--ux-border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.form-title-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    color: var(--ux-ink);
+}
+
+.label-strong {
+    font-weight: 700;
+    color: var(--ux-ink);
+}
+
+.input-elevated {
+    background: #f8fafc;
+    border: 1px solid var(--ux-border);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.input-elevated:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 30px rgba(39, 174, 96, 0.16);
+    background: #ffffff;
+}
+
+.helper-text {
+    color: var(--ux-muted);
+    font-size: 0.86rem;
+    line-height: 1.4;
+}
+
+.section-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(39, 174, 96, 0.12);
+    color: #146c43;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.modal-accent {
+    border: 1px solid rgba(39, 174, 96, 0.12);
+    box-shadow: var(--ux-shadow);
+}
+
+.modal-accent .modal-header {
+    background: linear-gradient(120deg, rgba(39, 174, 96, 0.14), rgba(39, 174, 96, 0));
+}
+
+.modal-accent .modal-body {
+    background: #fdfdfd;
+}
+
+.field-cluster {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 1px dashed rgba(39, 174, 96, 0.2);
+    border-radius: 10px;
+    background: rgba(39, 174, 96, 0.03);
+}
+
+.badge-soft {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 10px;
+    background: rgba(17, 24, 39, 0.05);
+    color: var(--ux-ink);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
