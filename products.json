@@ -1,0 +1,497 @@
+[
+    {
+        "id": 11,
+        "name": "Retrovisor Universal",
+        "category": "carroceria",
+        "brand": "universal",
+        "code": "RU-011",
+        "description": "Retrovisor ajustável",
+        "icon": "🪞"
+    },
+    {
+        "id": 12,
+        "name": "Carenagem Frontal",
+        "category": "carroceria",
+        "brand": "suzuki",
+        "code": "CF-012",
+        "description": "Carenagem aerodinâmica",
+        "icon": "🎨"
+    },
+    {
+        "id": 13,
+        "name": "Cabo de Embreagem",
+        "category": "transmissao",
+        "brand": "honda",
+        "code": "CE-013",
+        "description": "Cabo de embreagem reforçado",
+        "icon": "🔗"
+    },
+    {
+        "id": 14,
+        "name": "Pneu Dianteiro",
+        "category": "carroceria",
+        "brand": "universal",
+        "code": "PD-014",
+        "description": "Pneu de alta aderência",
+        "icon": "⭕"
+    },
+    {
+        "id": 15,
+        "name": "Kit de Embreagem",
+        "category": "transmissao",
+        "brand": "yamaha",
+        "code": "KE-015",
+        "description": "Kit completo de embreagem",
+        "icon": "⚙️"
+    },
+    {
+        "id": 16,
+        "name": "Guidão Esportivo",
+        "category": "carroceria",
+        "brand": "kawasaki",
+        "code": "GE-016",
+        "description": "Guidão em alumínio",
+        "icon": "🏍️"
+    },
+    {
+        "id": 17,
+        "name": "Pistão Completo",
+        "category": "motor",
+        "brand": "honda",
+        "code": "PC-017",
+        "description": "Pistão com anéis e pino",
+        "icon": "🔧"
+    },
+    {
+        "id": 18,
+        "name": "Cabo de Freio",
+        "category": "freios",
+        "brand": "universal",
+        "code": "CF-018",
+        "description": "Cabo de freio em aço",
+        "icon": "🔗"
+    },
+    {
+        "id": 19,
+        "name": "Jogo de Manetes",
+        "category": "carroceria",
+        "brand": "universal",
+        "code": "JM-019",
+        "description": "Manetes de freio e embreagem",
+        "icon": "🎮"
+    },
+    {
+        "id": 20,
+        "name": "Kit de Juntas do Motor",
+        "category": "motor",
+        "brand": "honda",
+        "code": "KJ-020",
+        "description": "Kit completo de juntas",
+        "icon": "📦"
+    },
+    {
+        "id": 21,
+        "name": "Vela de Ignição Premium",
+        "category": "motor",
+        "brand": "yamaha",
+        "code": "VP-021",
+        "description": "Vela de ignição de iridium",
+        "icon": "⚡"
+    },
+    {
+        "id": 22,
+        "name": "Amortecedor Traseiro",
+        "category": "suspensao",
+        "brand": "suzuki",
+        "code": "AT-022",
+        "description": "Amortecedor a gás",
+        "icon": "🔩"
+    },
+    {
+        "id": 23,
+        "name": "Kit de Transmissão",
+        "category": "transmissao",
+        "brand": "kawasaki",
+        "code": "KT-023",
+        "description": "Kit com corrente e coroas",
+        "icon": "⛓️"
+    },
+    {
+        "id": 24,
+        "name": "Bancada Completa",
+        "category": "carroceria",
+        "brand": "universal",
+        "code": "BC-024",
+        "description": "Banco piloto e garupa",
+        "icon": "💺"
+    },
+    {
+        "id": 25,
+        "name": "Corrente 530",
+        "category": "transmissao",
+        "brand": "universal",
+        "code": "C530-025",
+        "description": "Corrente 530 x 120",
+        "icon": "⛓️"
+    },
+    {
+        "id": 26,
+        "name": "Pneu Traseiro",
+        "category": "carroceria",
+        "brand": "universal",
+        "code": "PT-026",
+        "description": "Pneu traseiro premium",
+        "icon": "⭕"
+    },
+    {
+        "id": 27,
+        "name": "Filtro de Ar",
+        "category": "motor",
+        "brand": "universal",
+        "code": "FA-027",
+        "description": "Filtro de ar esportivo",
+        "icon": "💨"
+    },
+    {
+        "id": 28,
+        "name": "Escapamento Esportivo",
+        "category": "motor",
+        "brand": "universal",
+        "code": "EE-028",
+        "description": "Escapamento em alumínio",
+        "icon": "🔊"
+    },
+    {
+        "id": 29,
+        "name": "Clutch Completo",
+        "category": "transmissao",
+        "brand": "honda",
+        "code": "CC-029",
+        "description": "Jogo completo de embreagem",
+        "icon": "⚙️"
+    },
+    {
+        "id": 30,
+        "name": "Disco de Freio",
+        "category": "freios",
+        "brand": "universal",
+        "code": "DF-030",
+        "description": "Disco flutuante 320mm",
+        "icon": "🔴"
+    },
+    {
+        "id": 31,
+        "name": "Cilindro Mestre",
+        "category": "freios",
+        "brand": "universal",
+        "code": "CM-031",
+        "description": "Cilindro mestre hidráulico",
+        "icon": "⚙️"
+    },
+    {
+        "id": 32,
+        "name": "Alavanca de Freio",
+        "category": "freios",
+        "brand": "universal",
+        "code": "AFB-032",
+        "description": "Alavanca em alumínio CNC",
+        "icon": "🔨"
+    },
+    {
+        "id": 33,
+        "name": "Alavanca de Embreagem",
+        "category": "transmissao",
+        "brand": "universal",
+        "code": "AFE-033",
+        "description": "Alavanca ajustável",
+        "icon": "🔨"
+    },
+    {
+        "id": 34,
+        "name": "Mola de Suspensão",
+        "category": "suspensao",
+        "brand": "universal",
+        "code": "MS-034",
+        "description": "Mola progressiva",
+        "icon": "🌀"
+    },
+    {
+        "id": 35,
+        "name": "Bateria 12V",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "BAT-035",
+        "description": "Bateria selada 12V 5Ah",
+        "icon": "🔋"
+    },
+    {
+        "id": 36,
+        "name": "Alternador",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "ALT-036",
+        "description": "Alternador completo",
+        "icon": "⚡"
+    },
+    {
+        "id": 37,
+        "name": "Starter Motor",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "SM-037",
+        "description": "Motor de arranque",
+        "icon": "⚡"
+    },
+    {
+        "id": 38,
+        "name": "Farol LED",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "FL-038",
+        "description": "Farol LED 6000K",
+        "icon": "💡"
+    },
+    {
+        "id": 39,
+        "name": "Lanterna Traseira",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "LT-039",
+        "description": "Lanterna LED vermelha",
+        "icon": "🔴"
+    },
+    {
+        "id": 40,
+        "name": "Indicador de Direção",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "ID-040",
+        "description": "Piscas LED âmbar",
+        "icon": "🟡"
+    },
+    {
+        "id": 41,
+        "name": "Bobina de Ignição",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "BI-041",
+        "description": "Bobina 6V/12V",
+        "icon": "⚡"
+    },
+    {
+        "id": 42,
+        "name": "CDI Eletrônico",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "CDI-042",
+        "description": "Módulo CDI digital",
+        "icon": "🔌"
+    },
+    {
+        "id": 43,
+        "name": "Sensor de Velocidade",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "SV-043",
+        "description": "Sensor ABS",
+        "icon": "📡"
+    },
+    {
+        "id": 44,
+        "name": "Chicote Elétrico",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "CHE-044",
+        "description": "Fiação completa",
+        "icon": "🔌"
+    },
+    {
+        "id": 45,
+        "name": "Interruptor de Ignição",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "II-045",
+        "description": "Chave com cilindro",
+        "icon": "🔑"
+    },
+    {
+        "id": 46,
+        "name": "Regulador de Voltagem",
+        "category": "eletrica",
+        "brand": "universal",
+        "code": "RV-046",
+        "description": "Regulador 12V",
+        "icon": "⚡"
+    },
+    {
+        "id": 47,
+        "name": "Corrente Primária",
+        "category": "transmissao",
+        "brand": "universal",
+        "code": "CP-047",
+        "description": "Corrente comando",
+        "icon": "⛓️"
+    },
+    {
+        "id": 48,
+        "name": "Corrente Secundária",
+        "category": "transmissao",
+        "brand": "universal",
+        "code": "CS-048",
+        "description": "Corrente roda",
+        "icon": "⛓️"
+    },
+    {
+        "id": 49,
+        "name": "Coroa Dianteira",
+        "category": "transmissao",
+        "brand": "universal",
+        "code": "CORA-049",
+        "description": "Coroa 520 45T",
+        "icon": "⚙️"
+    },
+    {
+        "id": 50,
+        "name": "Pinhão Traseiro",
+        "category": "transmissao",
+        "brand": "universal",
+        "code": "PT-050",
+        "description": "Pinhão 520 13T",
+        "icon": "⚙️"
+    },
+    {
+        "id": 51,
+        "name": "Óleo de Motor",
+        "category": "motor",
+        "brand": "universal",
+        "code": "OM-051",
+        "description": "Óleo mineral 20W50",
+        "icon": "🛢️"
+    },
+    {
+        "id": 52,
+        "name": "Óleo de Câmbio",
+        "category": "transmissao",
+        "brand": "universal",
+        "code": "OC-052",
+        "description": "Óleo transmissão 80W90",
+        "icon": "🛢️"
+    },
+    {
+        "id": 53,
+        "name": "Óleo de Freio",
+        "category": "freios",
+        "brand": "universal",
+        "code": "OF-053",
+        "description": "Óleo freio DOT4",
+        "icon": "🛢️"
+    },
+    {
+        "id": 54,
+        "name": "Óleo de Suspensão",
+        "category": "suspensao",
+        "brand": "universal",
+        "code": "OS-054",
+        "description": "Óleo suspensão 5W",
+        "icon": "🛢️"
+    },
+    {
+        "id": 55,
+        "name": "Junta Cilindro",
+        "category": "motor",
+        "brand": "universal",
+        "code": "JC-055",
+        "description": "Junta cabeçote",
+        "icon": "📦"
+    },
+    {
+        "id": 56,
+        "name": "Junta Óleo Motor",
+        "category": "motor",
+        "brand": "universal",
+        "code": "JOM-056",
+        "description": "Retentor comando",
+        "icon": "📦"
+    },
+    {
+        "id": 57,
+        "name": "Rolamento Roda",
+        "category": "suspensao",
+        "brand": "universal",
+        "code": "RR-057",
+        "description": "Rolamento 6203",
+        "icon": "⚙️"
+    },
+    {
+        "id": 58,
+        "name": "Rolamento Motor",
+        "category": "motor",
+        "brand": "universal",
+        "code": "RM-058",
+        "description": "Rolamento comando",
+        "icon": "⚙️"
+    },
+    {
+        "id": 59,
+        "name": "Correia de Comando",
+        "category": "motor",
+        "brand": "universal",
+        "code": "CC-059",
+        "description": "Correia distribuição",
+        "icon": "⛓️"
+    },
+    {
+        "id": 60,
+        "name": "Válvula Admissão",
+        "category": "motor",
+        "brand": "universal",
+        "code": "VA-060",
+        "description": "Válvula 24mm",
+        "icon": "🔄"
+    },
+    {
+        "id": 61,
+        "name": "Válvula Escape",
+        "category": "motor",
+        "brand": "universal",
+        "code": "VE-061",
+        "description": "Válvula 21mm",
+        "icon": "🔄"
+    },
+    {
+        "id": 62,
+        "name": "Comando de Válvulas",
+        "category": "motor",
+        "brand": "universal",
+        "code": "CMV-062",
+        "description": "Comando execução",
+        "icon": "⚙️"
+    },
+    {
+        "id": 63,
+        "name": "Mola Válvula",
+        "category": "motor",
+        "brand": "universal",
+        "code": "MV-063",
+        "description": "Mola válvula motor",
+        "icon": "🌀"
+    },
+    {
+        "id": 64,
+        "name": "Retentor Óleo",
+        "category": "motor",
+        "brand": "universal",
+        "code": "RO-064",
+        "description": "Retentor vedação",
+        "icon": "📦"
+    },
+    {
+        "id": 65,
+        "name": "Eixo Comando",
+        "category": "motor",
+        "brand": "universal",
+        "code": "EC-065",
+        "description": "Eixo comando válvulas",
+        "icon": "⚙️"
+    }
+]
