@@ -367,9 +367,20 @@
                 <p>&copy; <span id="currentYear">2025</span> <strong>Manaus Automotive</strong>. Todos os direitos
                     reservados.</p>
                 <p class="footer-dev">Desenvolvido por Walderson</p>
+                <!-- Admin access link - hidden -->
+                <a href="admin.html" id="adminLink" style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;" title="Admin">Admin</a>
             </div>
         </div>
     </footer>
+
+    <script>
+        // Atalho de teclado para acessar admin: Ctrl+Shift+A
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                window.location.href = 'admin.html';
+            }
+        });
+    </script>
 
     <!-- Product Details Modal -->
     <div class="modal product-spotlight" id="productDetailsModal">
