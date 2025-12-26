@@ -486,11 +486,24 @@
 
     
 
+    <!-- 1. Configuração de ambiente (DEVE ser primeiro!) -->
+    <script src="config.js"></script>
+    
+    <!-- 2. Dados padrão de produtos -->
+    <script src="product-data.js"></script>
+    
+    <!-- 3. Enhancements e melhorias de UX -->
     <script src="enhancements.js"></script>
     <script src="ux-improvements.js"></script>
-    <script src="product-data.js"></script>
+    
+    <!-- 4. Armazenamento e sincronização -->
     <script src="indexedDB-storage.js"></script>
     <script src="sync-indexdb-products.js"></script>
+    
+    <!-- 5. Painel de admin (apenas em desenvolvimento) -->
+    <script src="sync-panel-admin.js"></script>
+    
+    <!-- 6. Script principal (DEVE ser último!) -->
     <script src="script.js"></script>
 </body>
 
