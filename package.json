@@ -1,0 +1,29 @@
+{
+  "name": "manaus-automotive-catalog",
+  "version": "1.0.0",
+  "description": "Catálogo virtual de peças para motocicletas - Manaus Automotive",
+  "main": "script.js",
+  "scripts": {
+    "start": "node serve-server.js",
+    "serve": "node serve-server.js --port 3000",
+    "deploy-check": "node deploy.js",
+    "dev": "node serve-server.js --port 3000"
+  },
+  "keywords": [
+    "motopeças",
+    "motocicleta",
+    "catálogo",
+    "e-commerce"
+  ],
+  "author": "Manaus Automotive",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/waldersonff/manauto.git"
+  }
+}

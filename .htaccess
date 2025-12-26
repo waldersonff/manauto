@@ -1,0 +1,86 @@
+# Apache Configuration para Aplicação SPA (Single Page Application)
+# Copie este arquivo para a raiz do seu site se usar Apache
+
+# Habilitar mod_rewrite
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Redirecionar URLs para index.html
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.html [L]
+</IfModule>
+
+# Habilitar compressão GZIP para melhor performance
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# Configurar cache para arquivos estáticos
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # HTML - cache por 1 dia
+    ExpiresByType text/html "access plus 1 day"
+    
+    # CSS e JS - cache por 30 dias
+    ExpiresByType text/css "access plus 30 days"
+    ExpiresByType application/javascript "access plus 30 days"
+    ExpiresByType text/javascript "access plus 30 days"
+    
+    # Imagens - cache por 30 dias
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/gif "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType image/x-icon "access plus 30 days"
+    
+    # Fontes - cache por 60 dias
+    ExpiresByType font/woff "access plus 60 days"
+    ExpiresByType font/woff2 "access plus 60 days"
+    
+    # Default
+    ExpiresDefault "access plus 7 days"
+</IfModule>
+
+# Headers de segurança
+<IfModule mod_headers.c>
+    # Prevenir MIME sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Prevenir clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Habilitar XSS protection
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Cache control
+    Header set Cache-Control "public, must-revalidate"
+</IfModule>
+
+# Remover headers desnecessários (segurança)
+<IfModule mod_headers.c>
+    Header unset X-Powered-By
+    Header unset Server
+</IfModule>
+
+# Habilitar ETag (cache baseado em hash)
+<IfModule mod_headers.c>
+    FileETag MTime Size
+</IfModule>
+
+# Redirecionar HTTP para HTTPS (descomente se usar HTTPS)
+# <IfModule mod_rewrite.c>
+#     RewriteCond %{HTTPS} off
+#     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>

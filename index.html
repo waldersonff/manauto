@@ -16,6 +16,12 @@
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src="Design_sem_nome-removebg-preview.png" alt="MotoPartes" class="loading-logo">
+        <div class="loading-spinner"></div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -272,18 +278,18 @@
             <p class="brands-subtitle">Trabalhamos com as melhores marcas do mercado</p>
 
             <div class="brands-grid" id="brandsGrid">
-                <div class="brand-item" onclick="filterByBrand('CPL')"><strong>CPL</strong></div>
-                <div class="brand-item" onclick="filterByBrand('Cobreq')"><strong>Cobreq</strong></div>
-                <div class="brand-item" onclick="filterByBrand('NGK')"><strong>NGK</strong></div>
-                <div class="brand-item" onclick="filterByBrand('Bosch')"><strong>Bosch</strong></div>
-                <div class="brand-item" onclick="filterByBrand('Gauss')"><strong>Gauss</strong></div>
-                <div class="brand-item" onclick="filterByBrand('Vedamotors')"><strong>Vedamotors</strong></div>
-                <div class="brand-item" onclick="filterByBrand('Riffel')"><strong>Riffel</strong></div>
-                <div class="brand-item" onclick="filterByBrand('Tork')"><strong>Tork</strong></div>
-                <div class="brand-item" onclick="filterByBrand('Magneti Marelli')"><strong>Magneti Marelli</strong></div>
-                <div class="brand-item" onclick="filterByBrand('Velth')"><strong>Velth</strong></div>
-                <div class="brand-item" onclick="filterByBrand('Rinaldi')"><strong>Rinaldi</strong></div>
-                <div class="brand-item" onclick="filterByBrand('SKB')"><strong>SKB</strong></div>
+                <div class="brand-item"><strong>CPL</strong></div>
+                <div class="brand-item"><strong>Cobreq</strong></div>
+                <div class="brand-item"><strong>NGK</strong></div>
+                <div class="brand-item"><strong>Bosch</strong></div>
+                <div class="brand-item"><strong>Gauss</strong></div>
+                <div class="brand-item"><strong>Vedamotors</strong></div>
+                <div class="brand-item"><strong>Riffel</strong></div>
+                <div class="brand-item"><strong>Tork</strong></div>
+                <div class="brand-item"><strong>Magneti Marelli</strong></div>
+                <div class="brand-item"><strong>Velth</strong></div>
+                <div class="brand-item"><strong>Rinaldi</strong></div>
+                <div class="brand-item"><strong>SKB</strong></div>
             </div>
         </div>
     </section>
@@ -478,68 +484,13 @@
         </div>
     </div>
 
-    <!-- Chat Box Widget -->
-    <div class="chat-widget">
-        <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="Abrir chat">
-            <i class="fas fa-comment-dots"></i>
-        </button>
-        <div class="chat-box" id="chatBox">
-            <div class="chat-header">
-                <div class="chat-header-info">
-                    <div class="chat-avatar">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div>
-                        <h4>Assistente Virtual</h4>
-                        <p><i class="fas fa-circle"></i> Online agora</p>
-                    </div>
-                </div>
-                <button class="chat-close" id="chatCloseBtn" aria-label="Fechar chat">&times;</button>
-            </div>
-            <div class="chat-messages" id="chatMessages">
-                <div class="chat-message bot">
-                    <div class="message-avatar">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="message-content">
-                        <p>Olá! 👋 Sou o assistente virtual da Manaus Automotive.</p>
-                        <p>Posso ajudá-lo a:</p>
-                        <ul>
-                            <li>Buscar peças no catálogo</li>
-                            <li>Verificar disponibilidade</li>
-                            <li>Tirar dúvidas sobre produtos</li>
-                            <li>Conectar você com um vendedor</li>
-                        </ul>
-                        <p>Como posso ajudá-lo hoje?</p>
-                    </div>
-                </div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" 
-                       id="chatInput" 
-                       placeholder="Digite sua mensagem..." 
-                       aria-label="Mensagem do chat">
-                <button id="chatSendBtn" aria-label="Enviar mensagem">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-            <div class="chat-suggestions" id="chatSuggestions">
-                <button class="suggestion-btn" data-message="Quero ver peças">🔧 Peças</button>
-                <button class="suggestion-btn" data-message="Quais marcas vocês trabalham?">🏷️ Marcas</button>
-                <button class="suggestion-btn" data-message="Falar com vendedor">👤 Falar com Vendedor</button>
-            </div>
-        </div>
-    </div>
-
     
 
     <script src="enhancements.js"></script>
     <script src="ux-improvements.js"></script>
     <script src="product-data.js"></script>
     <script src="indexedDB-storage.js"></script>
-    <!-- Módulos de sincronização IndexedDB -->
     <script src="sync-indexdb-products.js"></script>
-    <script src="sync-panel-admin.js"></script>
     <script src="script.js"></script>
 </body>
 
